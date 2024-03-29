@@ -3,9 +3,7 @@ import NoteType from "./NoteType.ts";
 import NoteCard from "./NoteCard.tsx";
 import AddNote from "./AddNote.tsx";
 
-const baseUrl = "http://localhost:7070/notes"
-
-
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 
 const Crud : React.FC = () => {
@@ -26,6 +24,7 @@ const Crud : React.FC = () => {
 			console.error('Error fetching notes:', error);
 		}
 	}
+
 	const addNote = async (text: string) => {
 		try {
 			const response = await fetch(baseUrl, {
@@ -56,8 +55,6 @@ const Crud : React.FC = () => {
 		}
 	};
 
-
-	console.log('notes', notes)
     return (
         <div className="flex flex-col justify-center gap-12 p-14">
 			<h1 className="uppercase font-bold text-center text-3xl p-2">Notes</h1>
