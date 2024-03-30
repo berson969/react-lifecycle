@@ -10,7 +10,7 @@ export const Forms: React.FC<FormsProps> = ({ onCalc }) => {
 	const [annualInterestRate, setAnnualInterestRate] = useState<number>(0);
 	const [months, setMonths] = useState<number>(0);
 	const [secondPrincipal, setSecondPrincipal] = useState<number>(0);
-	const [secondMonths, setSecondMonths] = useState<number>(120);
+	const [secondMonths, setSecondMonths] = useState<number>(0);
 	const [userPayment, setUserPayment] = useState<number>(0);
 
 	useEffect(() => {
@@ -78,7 +78,7 @@ export const Forms: React.FC<FormsProps> = ({ onCalc }) => {
 						id="months-left"
 						type="number"
 						placeholder="Months left"
-						value={months === 0 ? '' : months}
+						value={months <= 0 ? '' : months}
 						onChange={(e) => setMonths(parseFloat(e.target.value))}
 						className="text-right border-2 border-sky-500 w-96 h-8 custom-placeholder lowercase"
 						required
@@ -90,7 +90,7 @@ export const Forms: React.FC<FormsProps> = ({ onCalc }) => {
 						id="user-payment"
 						type="number"
 						placeholder="User payment"
-						value={userPayment === 0 ? '' : userPayment}
+						value={userPayment <= 0 ? '' : userPayment}
 						onChange={(e) => setUserPayment(parseFloat(e.target.value))}
 						className="text-right border-2 border-sky-500 w-96 h-8 custom-placeholder lowercase"
 						required
@@ -102,7 +102,7 @@ export const Forms: React.FC<FormsProps> = ({ onCalc }) => {
 						id="second-loan"
 						type="number"
 						placeholder="Second Loan Amount"
-						value={secondPrincipal === 0 ? '' : secondPrincipal}
+						value={secondPrincipal <= 0 ? '' : secondPrincipal}
 						onChange={(e) => setSecondPrincipal(parseFloat(e.target.value))}
 						className="text-right border-2 border-sky-500 w-96 h-8 custom-placeholder lowercase"
 						required
@@ -114,7 +114,7 @@ export const Forms: React.FC<FormsProps> = ({ onCalc }) => {
 						id="second-months-left"
 						type="number"
 						placeholder="Second Months left"
-						value={secondMonths === 0 ? '' : secondMonths}
+						value={secondMonths <= 0 ? '' : secondMonths}
 						onChange={(e) => setSecondMonths(parseFloat(e.target.value))}
 						className="text-right border-2 border-sky-500 w-96 h-8 custom-placeholder lowercase"
 						required

@@ -43,6 +43,7 @@ const MortgageCalculator : React.FC = () => {
 			secondBalance -= monthlyCorrect;
 			const correctTotalInterestPaid = totalInterestPaid - ((secondBalance >= 0) ? monthlyCorrect : 0);
 			const secondRemainingBalance = (secondBalance >= 0) ? secondBalance : 0;
+
 			const totalTotalInterestPaid = correctTotalInterestPaid + secondRemainingBalance;
 
 			const newInterestAmount = interestNew(balance, monthInterestRate, secondMonths - i - 1 );
