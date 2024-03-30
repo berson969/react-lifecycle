@@ -1,6 +1,6 @@
 export interface DataProps {
 	month: number;
-	payment: string;
+	userPayment: string;
 	remainingBalance: string;
 	currentInterestPaid: string;
 	totalInterestPaid: string;
@@ -8,6 +8,8 @@ export interface DataProps {
 	monthlyCorrect: string;
 	correctTotalInterestPaid: string;
 	totalTotalInterestPaid: string;
+	newInterestAmount: string;
+	differenceInterest: string;
 }
 
 export interface FormData {
@@ -17,6 +19,7 @@ export interface FormData {
 	annuityPayment: number;
 	secondPrincipal: number;
 	secondMonths: number;
+	userPayment: number;
 }
 
 export interface FormsProps {

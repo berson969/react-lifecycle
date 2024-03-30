@@ -2,9 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {Forms} from "./Forms.tsx";
 import {Table} from "./Table.tsx";
 import {DataProps, FormData} from "./DataProps.ts";
+import Constants from "./Constants.tsx";
+import {interestNew} from "./startCalculate.ts";
 
 const MortgageCalculator : React.FC = () => {
 	const [tableData, setTableData] = useState<DataProps[]>([]);
+	const [annuityPayment, setAnnuityPayment] = useState<number>(0)
 
 	useEffect(() => {
 		document.title = "Mortgage Calculator";
@@ -16,7 +19,8 @@ const MortgageCalculator : React.FC = () => {
 			months,
 			annuityPayment,
 			secondPrincipal,
-			secondMonths
+			secondMonths,
+			userPayment
 		} = props;
 		const monthInterestRate = annualInterestRate / 12 / 100;
 		const newData: DataProps[] = [];
@@ -29,7 +33,8 @@ const MortgageCalculator : React.FC = () => {
 		for (let i = 0; i < months; i++) {
 			const currentInterestPaid = balance * monthInterestRate;
 
-			balance -= (annuityPayment - currentInterestPaid);
+			balance -= (userPayment - currentInterestPaid);
+			if (balance < 0) {break}
 			totalInterestPaid += currentInterestPaid;
 
 			secondBalance -= monthlyCorrect;
@@ -37,27 +42,34 @@ const MortgageCalculator : React.FC = () => {
 			const secondRemainingBalance = (secondBalance >= 0) ? secondBalance : 0;
 			const totalTotalInterestPaid = correctTotalInterestPaid + secondRemainingBalance;
 
+			const newInterestAmount = interestNew(balance, monthInterestRate, secondMonths - i - 1 )
+			console.log(newInterestAmount)
+
 			newData.push({
 				month: i + 1,
-				payment: annuityPayment.toFixed(2),
+				userPayment: userPayment.toFixed(2),
 				remainingBalance: balance.toFixed(2),
 				currentInterestPaid: currentInterestPaid.toFixed(2),
 				totalInterestPaid: totalInterestPaid.toFixed(2),
 				secondRemainingBalance: secondRemainingBalance.toFixed(2),
 				monthlyCorrect: (secondBalance >= 0) ? monthlyCorrect.toFixed(2) : '0.00',
 				correctTotalInterestPaid: correctTotalInterestPaid.toFixed(2),
-				totalTotalInterestPaid: totalTotalInterestPaid.toFixed(2)
+				totalTotalInterestPaid: totalTotalInterestPaid.toFixed(2),
+				newInterestAmount: (newInterestAmount > 0) ? newInterestAmount.toFixed(2): "0.00",
+				differenceInterest: (newInterestAmount > 0) ? (newInterestAmount - secondRemainingBalance).toFixed(2) : "0.00"
 			})
 		}
 
 
 
 		setTableData(newData);
+		setAnnuityPayment(annuityPayment);
 	}
 
 	return (
-		<div>
+		<div className="container mx-auto">
 			<Forms onCalc={calculateData} />
+			<Constants annuityPayment={annuityPayment}/>
 			<Table tableData={tableData} />
 		</div>
 	);
