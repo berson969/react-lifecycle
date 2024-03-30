@@ -24,6 +24,7 @@ export const HomePage: React.FC = () => {
                     <li><Link to="/watches">мировые часы</Link></li>
                     <li><Link to="/crud">CRUD</Link></li>
                     <li><Link to="/chat">чат</Link></li>
+					<li><Link to="/mortgage">MortgageCalculator</Link></li>
                 </ul>
                 <Outlet />
 
