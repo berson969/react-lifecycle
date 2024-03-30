@@ -10,6 +10,7 @@ export interface DataProps {
 	totalTotalInterestPaid: string;
 	newInterestAmount: string;
 	differenceInterest: string;
+	newPayment: string;
 }
 
 export interface FormData {

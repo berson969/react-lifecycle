@@ -3,14 +3,16 @@ import {Forms} from "./Forms.tsx";
 import {Table} from "./Table.tsx";
 import {DataProps, FormData} from "./DataProps.ts";
 import Constants from "./Constants.tsx";
-import {interestNew} from "./startCalculate.ts";
+import {getAnnuityPayment, interestNew} from "./startCalculate.ts";
 
 const MortgageCalculator : React.FC = () => {
 	const [tableData, setTableData] = useState<DataProps[]>([]);
-	const [annuityPayment, setAnnuityPayment] = useState<number>(0)
+	const [annuityPayment, setAnnuityPayment] = useState<number>(0);
+	const [targetMonth, setTargetMonth] = useState<number>(0)
 
 	useEffect(() => {
 		document.title = "Mortgage Calculator";
+
 	}, []);
 	const calculateData = (props: FormData) => {
 		const {
@@ -27,6 +29,7 @@ const MortgageCalculator : React.FC = () => {
 		let balance = principal;
 		let secondBalance = secondPrincipal;
 		let totalInterestPaid = 0;
+		let isMade = false;
 
 		const monthlyCorrect = secondPrincipal / secondMonths;
 
@@ -42,8 +45,12 @@ const MortgageCalculator : React.FC = () => {
 			const secondRemainingBalance = (secondBalance >= 0) ? secondBalance : 0;
 			const totalTotalInterestPaid = correctTotalInterestPaid + secondRemainingBalance;
 
-			const newInterestAmount = interestNew(balance, monthInterestRate, secondMonths - i - 1 )
-			console.log(newInterestAmount)
+			const newInterestAmount = interestNew(balance, monthInterestRate, secondMonths - i - 1 );
+			const newPayment = getAnnuityPayment(balance, annualInterestRate, secondMonths - i - 1);
+			if (newInterestAmount - secondRemainingBalance < 0 && !isMade) {
+				setTargetMonth(i)
+				isMade = true;
+			}
 
 			newData.push({
 				month: i + 1,
@@ -56,7 +63,8 @@ const MortgageCalculator : React.FC = () => {
 				correctTotalInterestPaid: correctTotalInterestPaid.toFixed(2),
 				totalTotalInterestPaid: totalTotalInterestPaid.toFixed(2),
 				newInterestAmount: (newInterestAmount > 0) ? newInterestAmount.toFixed(2): "0.00",
-				differenceInterest: (newInterestAmount > 0) ? (newInterestAmount - secondRemainingBalance).toFixed(2) : "0.00"
+				differenceInterest: (newInterestAmount > 0) ? (newInterestAmount - secondRemainingBalance).toFixed(2) : "0.00",
+				newPayment: newPayment.toFixed(2)
 			})
 		}
 
@@ -69,7 +77,7 @@ const MortgageCalculator : React.FC = () => {
 	return (
 		<div className="container mx-auto">
 			<Forms onCalc={calculateData} />
-			<Constants annuityPayment={annuityPayment}/>
+			<Constants annuityPayment={annuityPayment} targetMonth={targetMonth}/>
 			<Table tableData={tableData} />
 		</div>
 	);

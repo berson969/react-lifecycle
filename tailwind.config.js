@@ -15,7 +15,8 @@ export default {
         'dejavu': ['DejaVu Sans', 'sans-serif'],
       },
       fontSize: {
-        '10px': '10px',
+		'10px': '10px',
+		'custom-placeholder': '0.3rem',
       },
       lineHeight: {
         '12px': '12px',

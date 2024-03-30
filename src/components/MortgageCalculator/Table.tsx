@@ -12,11 +12,11 @@ export const Table: React.FC<{ tableData: DataProps[] }>  = ({ tableData }) => {
 				<th  className="border border-gray-300 px-4 py-2">Remaining Balance</th>
 				<th  className="border border-gray-300 px-4 py-2">Interest Paid</th>
 				<th  className="border border-gray-300 px-4 py-2">Total Interest Paid</th>
-				<th  className="border border-gray-300 px-4 py-2">Monthly Correct</th>
-				<th  className="border border-gray-300 px-4 py-2">Second Loan remaining</th>
-				<th  className="border border-gray-300 px-4 py-2">Correct Total Interest</th>
+				<th  className="border border-gray-300 px-4 py-2">Write Off</th>
+				<th  className="border border-gray-300 px-4 py-2">DPAL</th>
 				<th  className="border border-gray-300 px-4 py-2">Full Total Interest</th>
-				<th  className="border border-gray-300 px-4 py-2">New Interest Amount</th>
+				<th  className="border border-gray-300 px-4 py-2">New payment</th>
+				<th  className="border border-gray-300 px-4 py-2">New Interest for Remaining Term</th>
 				<th  className="border border-gray-300 px-4 py-2">Difference Amount</th>
 			</tr>
 			</thead>
@@ -30,8 +30,8 @@ export const Table: React.FC<{ tableData: DataProps[] }>  = ({ tableData }) => {
 					<td  className="border border-gray-300 px-4 py-2 text-end">{data.totalInterestPaid}</td>
 					<td  className="border border-gray-300 px-4 py-2 text-end">{data.monthlyCorrect}</td>
 					<td  className="border border-gray-300 px-4 py-2 text-end">{data.secondRemainingBalance}</td>
-					<td  className="border border-gray-300 px-4 py-2 text-end">{data.correctTotalInterestPaid}</td>
 					<td  className="border border-gray-300 px-4 py-2 text-end">{data.totalTotalInterestPaid}</td>
+					<td  className="border border-gray-300 px-4 py-2 text-end">{data.newPayment}</td>
 					<td  className="border border-gray-300 px-4 py-2 text-end">{data.newInterestAmount}</td>
 					<td
 						className={`border border-gray-300 px-4 py-2 text-end ${parseFloat(data.differenceInterest) >= 0 ? 'text-green-500' : 'text-red-500'}`}>
