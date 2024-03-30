@@ -46,12 +46,18 @@ const MortgageCalculator : React.FC = () => {
 
 			const totalTotalInterestPaid = correctTotalInterestPaid + secondRemainingBalance;
 
-			const newInterestAmount = interestNew(balance, monthInterestRate, secondMonths - i - 1 );
-			const newPayment = getAnnuityPayment(balance, annualInterestRate, secondMonths - i - 1);
-			if (newInterestAmount - secondRemainingBalance < 0 && !isMade) {
-				setTargetMonth(i)
-				isMade = true;
+			const newTerm = secondMonths - i - 1;
+			let newInterestAmount = 0;
+			let newPayment = 0;
+			if (newTerm > 0) {
+				newInterestAmount = interestNew(balance, monthInterestRate, newTerm );
+				newPayment = getAnnuityPayment(balance, annualInterestRate, newTerm);
+				if (newInterestAmount - secondRemainingBalance < 0 && !isMade) {
+					setTargetMonth(i)
+					isMade = true;
+				}
 			}
+
 
 			newData.push({
 				month: i + 1,
